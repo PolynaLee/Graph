@@ -1,4 +1,4 @@
-# GRAPH STADY IN PYTHON
+# GRAPH STUDY IN PYTHON
 
 1) traverce
 2) transform
