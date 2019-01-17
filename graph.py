@@ -64,13 +64,13 @@ def make_animated_graph(graph, path=collections.deque([(0,0)]), title=''):
           edgelist.append(new)
           nodelist.append(new[1])
    
-    fig = plt.figure(figsize=(8, 6))
+    fig = plt.figure(figsize=(9, 7))
     fig.canvas.set_window_title('Графы')
     ax = fig.subplots()
     edgelist, nodelist=[], [path[0][0]]
     #install graphviz and be pleased or...
     #pos = nx.nx_pydot.pydot_layout(graph)    
-    pos = nx.spring_layout(graph, k=0.5, iterations=170, scale=1.4)
+    pos = nx.spring_layout(graph,iterations=200)
     warnings.filterwarnings("ignore")
     ani = matplotlib.animation.FuncAnimation(fig, draw_me, frames=len(result), interval=700, repeat=False)
     plt.show()
