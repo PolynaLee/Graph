@@ -49,7 +49,7 @@ def fromAM2AL(graph):
 
 
 
-def make_animated_graph(graph, path, title):
+def make_animated_graph(graph, path=collections.deque([(0,0)], title):
     def draw_me(num):
        ax.clear()
        ax.set_title(title, fontsize=12)
