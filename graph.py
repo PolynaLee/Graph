@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import matplotlib.animation
 import warnings
-
+import pickle
 
 def BFS(graph, root): 
     visited, queue, result = set([root]), collections.deque([root]), collections.deque([(root,root)])
@@ -48,8 +48,7 @@ def fromAM2AL(graph):
     return [[ 1 if j in i else 0 for j in graph.keys()] for i in graph.values()]
 
 
-
-def make_animated_graph(graph, path=collections.deque([(0,0)], title):
+def make_animated_graph(graph, path=collections.deque([(0,0)]), title=''):
     def draw_me(num):
        ax.clear()
        ax.set_title(title, fontsize=12)
@@ -70,7 +69,7 @@ def make_animated_graph(graph, path=collections.deque([(0,0)], title):
     ax = fig.subplots()
     edgelist, nodelist=[], [path[0][0]]
     #install graphviz and be pleased or...
-    #pos = nx.nx_pydot.pydot_layout(graph, prog='fdp')    
+    #pos = nx.nx_pydot.pydot_layout(graph)    
     pos = nx.spring_layout(graph, k=0.5, iterations=170, scale=1.4)
     warnings.filterwarnings("ignore")
     ani = matplotlib.animation.FuncAnimation(fig, draw_me, frames=len(result), interval=700, repeat=False)
@@ -100,15 +99,18 @@ if __name__ == '__main__':
     make_animated_graph(d2, result, 'Рандомный граф! Теперь поиск в глубину')
    
     print('\n\n\nВот наш новый граф как список смежности:')
-    d2=nx.pappus_graph()
+    #d2=nx.pappus_graph()
+    with open('graph.pl', 'rb') as f:
+       d2=pickle.load(f)
     graph=nx.to_dict_of_lists(d2)     
     print(graph)
 
-    find=10
+    start, find=28, 42
     print('\n\nКратчайший путь до узла {}'.format(find))
-    result=FindShortestWay(graph, 0,find)
+    result=FindShortestWay(graph, start, find)
+    #result=nx.shortest_path(d2, source=0, target=find)
     print(result if result else 'Нет пути')
     result=collections.deque(zip(result[:-1], result[1:])) if result else collections.deque([(0,0)])      
-    make_animated_graph(d2, result, 'Рандомный граф! Поиск кратчайшего пути от {} до {}'.format(0, find))
+    make_animated_graph(d2, result, 'Граф сети банд Нью-Йорка! Поиск кратчайшего пути от (рукопожатий) {} до {}'.format(start, find))
     
 
